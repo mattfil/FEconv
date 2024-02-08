@@ -261,24 +261,24 @@ write(iu, '(a)') '$EndMeshFormat'
 
 !store nodes
 write(iu, '(a)') '$Nodes'
-write(iu, *)      nnod
+write(iu, '(I0)')      nnod
 do ipp = 1, size(piece2save,1)
   ip = piece2save(ipp)
   call build_node_coordinates(pmh%pc(ip), ip, all_P1, znod)
   if (.not. all_P1) then
     do j = 1, pmh%pc(ip)%nnod
-      write(iu, *) nnod_piece(ipp-1)+j, (znod(i,j), i = 1,pmh%pc(ip)%dim), (0._real64, i = 1,3-pmh%pc(ip)%dim)
+      write(iu, '(I0,1x,G0.12,1x,G0.12,1x,G0.12)') nnod_piece(ipp-1)+j, (znod(i,j), i = 1,pmh%pc(ip)%dim), (0._real64, i = 1,3-pmh%pc(ip)%dim)
     end do
   else
     do j = 1, pmh%pc(ip)%nver
-      write(iu, *) nnod_piece(ipp-1)+j, (pmh%pc(ip)%z(i,j), i = 1,pmh%pc(ip)%dim), (0._real64, i = 1,3-pmh%pc(ip)%dim)
+      write(iu, '(I0,1x,G0.12,1x,G0.12,1x,G0.12)') nnod_piece(ipp-1)+j, (pmh%pc(ip)%z(i,j), i = 1,pmh%pc(ip)%dim), (0._real64, i = 1,3-pmh%pc(ip)%dim)
     end do
   end if
 end do
 write(iu, '(a)') '$EndNodes'
 !store elements
 write(iu, '(a)') '$Elements'
-write(iu, *)      nel
+write(iu, '(I0)')      nel
 do ipp = 1, size(piece2save,1)
   ip = piece2save(ipp)
   prev_nel = nel_piece(ipp-1)
@@ -286,12 +286,12 @@ do ipp = 1, size(piece2save,1)
     associate(elg => pmh%pc(ip)%el(ig)) !elg: current group
       if (.not. FEDB(elg%type)%nver_eq_nnod) then
         do k = 1, elg%nel
-          write(iu, *) prev_nel+k, id4pmh(elg%type), 2, elg%ref(k), prev_nel+k, (nnod_piece(ipp-1)+elg%nn(i,k), &
+          write(iu, '(' // repeat('I0,1x,', 5+FEDB(elg%type)%lnv) // ')') prev_nel+k, id4pmh(elg%type), 2, elg%ref(k), prev_nel+k, (nnod_piece(ipp-1)+elg%nn(i,k), &
           i = 1,FEDB(elg%type)%lnn)
         end do
       else
         do k = 1, elg%nel
-          write(iu, *) prev_nel+k, id4pmh(elg%type), 2, elg%ref(k), prev_nel+k, (nnod_piece(ipp-1)+elg%mm(i,k), &
+          write(iu, '(' // repeat('I0,1x,', 5+FEDB(elg%type)%lnv) // ')') prev_nel+k, id4pmh(elg%type), 2, elg%ref(k), prev_nel+k, (nnod_piece(ipp-1)+elg%mm(i,k), &
           i = 1,FEDB(elg%type)%lnv)
         end do
       end if

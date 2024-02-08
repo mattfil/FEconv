@@ -447,13 +447,13 @@ do i=1,size(piece2save,1)
         tnvpc = tnvpc + pc%el(j)%nel*lnv
       endif
       ! Build vtk cell types array
-      call set(celltypes, [(pmh2vtkcelltype(tp), k=nel,nel+pc%el(j)%nel)] , [(k, k = nel+1,nel+1+pc%el(j)%nel)], fit=.false.)
+      call set(celltypes, [(pmh2vtkcelltype(tp), k=nel,nel+pc%el(j)%nel)] , [(k, k = nel+1,nel+pc%el(j)%nel)], fit=.false.)
       if(FEDB(tp)%tdim == maxtopdim) then !subdomain references
-        call set(el_ref, [(pc%el(j)%ref(k), k=1,pc%el(j)%nel)] , [(k, k = nel+1,nel+1+pc%el(j)%nel)], fit=.false.)
+        call set(el_ref, [(pc%el(j)%ref(k), k=1,pc%el(j)%nel)] , [(k, k = nel+1,nel+pc%el(j)%nel)], fit=.false.)
       elseif(FEDB(tp)%tdim == 2) then     !face references
-        call set(f_ref, [(pc%el(j)%ref(k), k=1,pc%el(j)%nel)] , [(k, k = nel+1,nel+1+pc%el(j)%nel)], fit=.false.)
+        call set(f_ref, [(pc%el(j)%ref(k), k=1,pc%el(j)%nel)] , [(k, k = nel+1,nel+pc%el(j)%nel)], fit=.false.)
       elseif(FEDB(tp)%tdim == 1) then     !edge references
-        call set(e_ref, [(pc%el(j)%ref(k), k=1,pc%el(j)%nel)] , [(k, k = nel+1,nel+1+pc%el(j)%nel)], fit=.false.)
+        call set(e_ref, [(pc%el(j)%ref(k), k=1,pc%el(j)%nel)] , [(k, k = nel+1,nel+pc%el(j)%nel)], fit=.false.)
       elseif(FEDB(tp)%tdim == 0) then     !vertex references
         do k=1,pc%el(j)%nel
           v_ref(pc%el(j)%mm(:,k)) = pc%el(j)%ref(k)

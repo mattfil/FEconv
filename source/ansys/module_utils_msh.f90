@@ -363,7 +363,7 @@ subroutine add_faces_to_pmh(faces,izones,pmh)
   type(msh_zone),               intent(inout) :: izones
   type(pmh_mesh),               intent(inout) :: pmh
   integer, allocatable                        :: groups(:) !groups(face type) = group number
-  integer                                     :: i, numgroups, group, numface,ft
+  integer                                     :: i, numgroups, group, numface,ft,mf
   logical                                     :: tf(2) = [.true.,.false.]
 
 
@@ -373,7 +373,7 @@ subroutine add_faces_to_pmh(faces,izones,pmh)
 
   if(.not.allocated(groups)) allocate(groups(size(FEDB,1)))
   groups = 0
-
+  mf=0
   numgroups = 0
   if(allocated(pmh%pc(1)%el)) numgroups = size(pmh%pc(1)%el,1)
 
@@ -403,12 +403,13 @@ subroutine add_faces_to_pmh(faces,izones,pmh)
       ft = faces%type(i)
       group = groups(ft)
   
-      numface = numface+1
-  
+      !numface = numface+1
+      numface = pmh%pc(1)%el(group)%nel+1
+      
       call set(2, pmh%pc(1)%el(group)%mm,faces%mm(i)%data,numface,fit=tf)
       call set(pmh%pc(1)%el(group)%ref,faces%zone(i), numface,.false.)
       pmh%pc(1)%el(group)%nel = pmh%pc(1)%el(group)%nel + 1
-  
+        mf = pmh%pc(1)%el(group)%nel 
     enddo
   end if
 

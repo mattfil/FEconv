@@ -95,7 +95,7 @@ contains
 subroutine VTU_open(ficho)
 !! Open a VTU file.
 character(*), intent(in) :: ficho !! Output VTU file.
-if (vtk_ini_xml('BINARY', ficho, 'UnstructuredGrid') /= 0) call error('(module_writeVTU/VTU_open) vtk_ini_xml error.')
+if (vtk_ini_xml('ASCII', ficho, 'UnstructuredGrid') /= 0) call error('(module_writeVTU/VTU_open) vtk_ini_xml error.')
 call info('(module_writeVTU/VTU_open) writing a VTU binary file '//trim(ficho)//'...')
 end subroutine
 
@@ -353,7 +353,7 @@ if (cell_type(celldesc, DIM, LNV, LNN, LNE, LNF, CTYPE) /= 0) &
 call info('(module_writeVTU/writeVTU) writing a VTU binary file...')
 call info('(module_writeVTU/writeVTU) saving mesh data...')
 ! Create output
-if (vtk_ini_xml('BINARY', ficho, 'UnstructuredGrid') /= 0) call error('(module_writeVTU/writeVTU) vtk_ini_xml error.')
+if (vtk_ini_xml('ASCII', ficho, 'UnstructuredGrid') /= 0) call error('(module_writeVTU/writeVTU) vtk_ini_xml error.')
 ! Saving coords in the current piece
 if (DIM < 3) then
   if (vtk_geo_xml(nnod, nel, z(1,:), z(2,:), (/(real(0,R8P),i=1,nnod)/)) /= 0) &
@@ -472,7 +472,7 @@ if (cell_type(celldesc, DIM, LNV, LNN, LNE, LNF, CTYPE) /= 0) &
 call info('(module_writeVTU/writeVTU4) writing a VTU binary file...')
 call info('(module_writeVTU/writeVTU4) saving mesh data...')
 ! Create output
-if (vtk_ini_xml('BINARY', ficho, 'UnstructuredGrid') /= 0) call error('(module_writeVTU/writeVTU4) vtk_ini_xml error.')
+if (vtk_ini_xml('ASCII', ficho, 'UnstructuredGrid') /= 0) call error('(module_writeVTU/writeVTU4) vtk_ini_xml error.')
 ! Saving coords in the current piece
 if (DIM < 3) then
   if (vtk_geo_xml(nnod, nel, real(z(1,:),R4P), real(z(2,:),R4P), (/(real(0,R4P),i=1,nnod)/)) /= 0) &

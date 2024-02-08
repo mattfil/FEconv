@@ -3,7 +3,6 @@
 ### Fortran ###
 # Prerequisites
 *.d
-/Console1/
 
 # Compiled Object files
 *.slo
