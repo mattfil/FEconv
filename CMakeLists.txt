@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.15)
 set(CMAKE_Fortran_COMPILER "C:/Program Files (x86)/Intel/oneAPI/compiler/latest/bin/ifort.exe")
 enable_language(Fortran)
 set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>")
+set(CMAKE_Fortran_FLAGS "-libs:static ${CMAKE_FORTRAN_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "/stack:10000000 ${CMAKE_EXE_LINKER_FLAGS}")
 project(MeshConverter)
 
 # Set source files

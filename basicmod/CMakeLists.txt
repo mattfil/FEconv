@@ -3,6 +3,7 @@ set(CMAKE_Fortran_COMPILER "C:/Program Files (x86)/Intel/oneAPI/compiler/latest/
 enable_language(Fortran)
 project(basicmod)
 
+set(CMAKE_Fortran_FLAGS "-libs:static ${CMAKE_FORTRAN_FLAGS}")
 # Set source files
 set(SOURCES
     source
@@ -22,3 +23,5 @@ endforeach()
 
 # Add the executable or library
 add_library(basicmod "${all_f90_files_list}")
+
+
