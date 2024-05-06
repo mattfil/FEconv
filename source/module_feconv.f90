@@ -253,6 +253,9 @@ else
     elseif (is_arg('-gm')) then !Gmsh
       call info('Loading Gmsh (.msh) mesh file...')
       call load_gmsh(infile, get_unit(), pmh); is_pmh = .true.
+    elseif (is_arg('-gmi')) then !Gmsh
+      call info('Loading Gmsh (.msh) mesh file...')
+      call load_gmsh(infile, get_unit(), pmh); is_pmh = .true.
     else !ANSYS
       call info('Loading ANSYS mesh file...')
       call load_msh(infile, pmh); is_pmh = .true.
@@ -481,7 +484,15 @@ elseif (force_to_save) then
       call info('Saving FreFem++ mesh file...')
       if (.not. is_pmh) call mfm2pmh(nel, nnod, nver, dim, lnn, lnv, lne, lnf, nn, mm, nrc, nra, nrv, z, nsd, pmh)
       call save_freefem_msh(outfile, get_unit(), pmh)
-    elseif (is_arg('-gm')) then !Gmsh
+     elseif (is_arg('-gm')) then !Gmsh
+      call info('Saving Gmsh mesh file...')
+      if (.not. is_pmh) call mfm2pmh(nel, nnod, nver, dim, lnn, lnv, lne, lnf, nn, mm, nrc, nra, nrv, z, nsd, pmh)
+      call save_gmsh(outfile, get_unit(), pmh)
+    elseif (is_arg('-gmsh')) then !Gmsh
+      call info('Saving Gmsh mesh file...')
+      if (.not. is_pmh) call mfm2pmh(nel, nnod, nver, dim, lnn, lnv, lne, lnf, nn, mm, nrc, nra, nrv, z, nsd, pmh)
+      call save_gmsh(outfile, get_unit(), pmh)
+    elseif (is_arg('-gmo')) then !Gmsh
       call info('Saving Gmsh mesh file...')
       if (.not. is_pmh) call mfm2pmh(nel, nnod, nver, dim, lnn, lnv, lne, lnf, nn, mm, nrc, nra, nrv, z, nsd, pmh)
       call save_gmsh(outfile, get_unit(), pmh)
